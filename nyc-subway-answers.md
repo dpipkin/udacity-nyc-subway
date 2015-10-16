@@ -48,29 +48,36 @@ Given that information, I would say that my model is appropriate for this datase
 
 # Section 3. Visualization  
   
-3.1 One visualization should contain two histograms: one of  ENTRIESn_hourly for rainy days and one of ENTRIESn_hourly for non-rainy days.
-You can combine the two histograms in a single plot or you can use two separate plots.
-If you decide to use to two separate plots for the two histograms, please ensure that the x-axis limits for both of the plots are identical. It is much easier to compare the two in that case.
-For the histograms, you should have intervals representing the volume of ridership (value of ENTRIESn_hourly) on the x-axis and the frequency of occurrence on the y-axis. For example, each interval (along the x-axis), the height of the bar for this interval will represent the number of records (rows in our data) that have ENTRIESn_hourly that falls in this interval.
-Remember to increase the number of bins in the histogram (by having larger number of bars). The default bin width is not sufficient to capture the variability in the two samples.  
-![histograms](histograms.png)
+### 3.1 One visualization should contain two histograms: one of  ENTRIESn_hourly for rainy days and one of ENTRIESn_hourly for non-rainy days.
+  
+![histograms](histograms.png)  
+Blue is non-rain and green is rain
 
-3.2 One visualization can be more freeform. You should feel free to implement something that we discussed in class (e.g., scatter plots, line plots) or attempt to implement something more advanced if you'd like. Some suggestions are:
-Ridership by time-of-day
-Ridership by day-of-week
+### 3.2 One visualization can be more freeform.
+![day_week](day_week.png)
 
 # Section 4. Conclusion
 
 Please address the following questions in detail. Your answers should be 1-2 paragraphs long.  
-4.1 From your analysis and interpretation of the data, do more people ride
-the NYC subway when it is raining or when it is not raining?    
-4.2 What analyses lead you to this conclusion? You should use results from both your statistical
-tests and your linear regression to support your analysis.
+### 4.1 From your analysis and interpretation of the data, do more people ride the NYC subway when it is raining or when it is not raining?    
+More people ride the subway when it is raining.  
+I feel confident saying this because of the results of the statistical tests performed (see below). Subways are an easy way to get around when it is raining, and it makes sense that most people don't want to get wet.
+When I was in Manhattan, things seemed fairly close, so the distance didn't bother me, but not having to walk in the rain (even for a short distance) can be worth the subway ticket for many people. There was also evidence from the linear
+model to suggest that temperature and wind speed had something to do with it to. Bad weather means good public transit sales.
+
+### 4.2 What analyses lead you to this conclusion? You should use results from both your statistical tests and your linear regression to support your analysis.
+As discussed in Section 1, the Mann-Whitney test showed statistical significance at .05 that rainy/non-rainy days are different. This means that we
+can be 95% sure that they aren't different by chance &mdash; there must be a reason for the difference. Looking at the differences in means for rainy/non-rainy days
+leads us to conclude that not only is the average for rainy days higher, but rainy days on average will be higher in the long run.  
+The inputs chosen for the linear model also helped show that other weather factors had an effect. I don't have the normalized coefficients, but a quick glance at the non-normalized ones
+suggest that the wind speed and temperature were just as big of a part of the model as the precipitation.
 
 # Section 5. Reflection
 
 Please address the following questions in detail. Your answers should be 1-2 paragraphs long.  
-5.1 Please discuss potential shortcomings of the methods of your analysis, including:
-Dataset,
-Analysis, such as the linear regression model or statistical test.  
-5.2 (Optional) Do you have any other insight about the dataset that you would like to share with us?
+### 5.1 Please discuss potential shortcomings of the methods of your analysis, including: Dataset, Analysis, such as the linear regression model or statistical test.  
+One of the biggest shortcomings with the linear regression is that I don't know for sure if I reached a global optimum. Using gradient descent, I was able to get a quicker answer for more parameters. Looking back, choosing a limited set of parameters
+and using an ordinary least squares approach would have given me a better model.  
+The Mann-Whitney U-test is a robust test that does very well with data that isn't normally-distributed. After some research, I couldn't find any real shortcomings of the test overall. However, the fact that I just picked
+.05 as the alpha for my test can come under some scrutiny. More practice and familiarity in the area would help me decide if that was a good
+significance value or not.
