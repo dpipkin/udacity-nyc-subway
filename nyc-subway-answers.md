@@ -7,7 +7,14 @@ http://blog.minitab.com/blog/adventures-in-statistics/regression-analysis-how-do
 # Section 1. Statistical Test
 
 ### 1.1 Which statistical test did you use to analyze the NYC subway data? Did you use a one-tail or a two-tail P value? What is the null hypothesis? What is your p-critical value?
-I used a Mann-Whitney U-test to analyze the subway/weather data. I did a two tailed test with an alpha of .05. I'm not sure how to calculate a p-critical value for a U distribution, but I used the p-value to test my hypothesis.   
+I used a Mann-Whitney U-test to analyze the subway/weather data.  
+This test tries to determine whether one distribution is more likely to generate a higher value than another. This is perfect for our question: Do more people ride the NYC subway when it is raining or when it is not raining?  
+Our null hypothesis is that the probability that a random hourly entry record drawn from our non-rainy days has a 50/50 chance of being greater than a random hourly entry record from our rainy days. In formal language, this is expressed as:  
+**H<sub>0</sub>: P(x > y) = 0.5**  
+**H<sub>A</sub>: P(x > y) &ne; 0.5**  
+Where *H<sub>0</sub>* is the null hypothesis, *H<sub>A</sub>* is the alternative hypothesis, *x* is a random hourly entry from our non-rainy days, and *y* is a random
+hourly entry from our rainy days.  
+The p-critical value is 0.05.
 
 ### 1.2 Why is this statistical test applicable to the dataset? In particular, consider the assumptions that the test is making about the distribution of ridership in the two samples.
 I would have used a Z-test for this dataset because our sample sizes were much greater than 30, that assumes the data is normally distributed.  
@@ -16,10 +23,10 @@ After performing a Shapiro-Wilk test, I found out that this data isn't from a no
 average entries with rain: 1105.4463767458733  
 average entries without rain: 1090.278780151855  
 U: 1924409167.0  
-p-value: 0.024999912793489721  
+p-value: 0.04999982558697944  
 
 ### 1.4 What is the significance and interpretation of these results?
-These results show that it is very likely (95%) that the differences in means aren't just by chance.  The average ridership on rainy days in actually higher.
+These results show that it is very unlikely (~5%) that the differences in means are just by chance.  The average ridership on rainy days is actually higher.
 
 # Section 2. Linear Regression
 
@@ -39,10 +46,11 @@ It is a little bit difficult to read (I couldn't figure out how to seperate out 
 My R2 ended up being about 0.4168.
 
 ### 2.6 What does this R2 value mean for the goodness of fit for your regression model? Do you think this linear model to predict ridership is appropriate for this dataset, given this R2 value?
-It's not great, I just wanted to get to above .4 for the assignment. However, I did find this information on minitab's website:
+This R2 shows that about 42% of the variation in hourly entries can be explained by the features we chose for our model.   
+I was disappointed in that low percentage until I ran into this information on minitab's website:
 > In some fields, it is entirely expected that your R-squared values will be low. For example, any field that attempts to predict human behavior, such as psychology, typically has R-squared values lower than 50%. Humans are simply harder to predict than, say, physical processes.
 
-Given that information, I would say that my model is appropriate for this dataset, considering how unpredictable humans can be.
+Given that information, I would say that my model is appropriate for this dataset, considering how unpredictable humans can be. Even though we still have 58% of the variability unexplained, our predictions are much better than random guessing and can have practical applications in capacity planning.
 
 
 
@@ -51,10 +59,11 @@ Given that information, I would say that my model is appropriate for this datase
 ### 3.1 One visualization should contain two histograms: one of  ENTRIESn_hourly for rainy days and one of ENTRIESn_hourly for non-rainy days.
   
 ![histograms](histograms.png)  
-Blue is non-rain and green is rain
+This chart compares the distributions of the non-rainy and rainy days. There were fewer rainy days but the spread looks very similar in both. I cut off entries that were greater than 10,000 because they all had virtually one and it's much clearer in this narrow view.
 
 ### 3.2 One visualization can be more freeform.
-![day_week](day_week.png)
+![per_day](per_day.png)  
+It is very apparent by this chart that the days with the lowest ridership were Saturday and Sunday. There is quite a difference between Sunday and Tuesday, so the day of the week could help predict ridership.
 
 # Section 4. Conclusion
 
@@ -80,4 +89,7 @@ One of the biggest shortcomings with the linear regression is that I don't know 
 and using an ordinary least squares approach would have given me a better model.  
 The Mann-Whitney U-test is a robust test that does very well with data that isn't normally-distributed. After some research, I couldn't find any real shortcomings of the test overall. However, the fact that I just picked
 .05 as the alpha for my test can come under some scrutiny. More practice and familiarity in the area would help me decide if that was a good
-significance value or not.
+significance value or not.  
+Our dataset has very accurate measurements. Weather stations are good at reporting rainfall and turnstiles are good at counting people. The two problems I have with this dataset have to do with time.
+We are only given a month of data, which makes our model fairly weak. There are other rainy months in the year, and the weather can probably predict rider behavior in winter months as well.
+It would also be nice to see multiple years, to tell how much ridership is increasing over time. This data is about to turn 5 years old in a couple months, so our model could wear out over time.
