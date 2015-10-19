@@ -1,124 +1,19 @@
-<style>
-	body {
-	font-family: "Avenir Next", Helvetica, Arial, sans-serif;
-	padding:1em;
-	margin:auto;
-	max-width:42em;
-	background:#fefefe;
-}
-
-h1, h2, h3, h4, h5, h6 {
-	font-weight: bold;
-}
-
-h1 {
-	color: #000000;
-	font-size: 28pt;
-}
-
-h2 {
-	border-bottom: 1px solid #CCCCCC;
-	color: #000000;
-	font-size: 24px;
-}
-
-h3 {
-	font-size: 18px;
-}
-
-h4 {
-	font-size: 16px;
-}
-
-h5 {
-	font-size: 14px;
-}
-
-h6 {
-	color: #777777;
-	background-color: inherit;
-	font-size: 14px;
-}
-
-hr {
-	height: 0.2em;
-	border: 0;
-	color: #CCCCCC;
-	background-color: #CCCCCC;
-}
-
-p, blockquote, ul, ol, dl, li, table, pre {
-	margin: 15px 0;
-}
-
-a, a:visited {
-	color: #4183C4;
-	background-color: inherit;
-	text-decoration: none;
-}
-
-#message {
-	border-radius: 6px;
-	border: 1px solid #ccc;
-	display:block;
-	width:100%;
-	height:60px;
-	margin:6px 0px;
-}
-
-button, #ws {
-	font-size: 10pt;
-	padding: 4px 6px;
-	border-radius: 5px;
-	border: 1px solid #bbb;
-	background-color: #eee;
-}
-
-code, pre, #ws, #message {
-	font-family: Monaco;
-	font-size: 10pt;
-	border-radius: 3px;
-	background-color: #F8F8F8;
-	color: inherit;
-}
-
-code {
-	border: 1px solid #EAEAEA;
-	margin: 0 2px;
-	padding: 0 5px;
-}
-
-pre {
-	border: 1px solid #CCCCCC;
-	overflow: auto;
-	padding: 4px 8px;
-}
-
-pre > code {
-	border: 0;
-	margin: 0;
-	padding: 0;
-}
-
-#ws { background-color: #f8f8f8; }
-
-.send { color:#77bb77; }
-.server { color:#7799bb; }
-.error { color:#AA0000; }
-</style>
+<link rel="stylesheet" href="style.css">
 
 <h1 id="section-0-references">Section 0. References</h1>
 <p><a href="https://en.wikipedia.org/wiki/Mann%E2%80%93Whitney_U_test">https://en.wikipedia.org/wiki/Mann%E2%80%93Whitney_U_test</a>
+<a href="http://stats.stackexchange.com/questions/116315/problem-with-mann-whitney-u-test-in-scipy#116332">http://stats.stackexchange.com/questions/116315/problem-with-mann-whitney-u-test-in-scipy#116332</a>
 <a href="http://blog.minitab.com/blog/adventures-in-statistics/regression-analysis-how-do-i-interpret-r-squared-and-assess-the-goodness-of-fit">http://blog.minitab.com/blog/adventures-in-statistics/regression-analysis-how-do-i-interpret-r-squared-and-assess-the-goodness-of-fit</a></p>
 <h1 id="section-1-statistical-test">Section 1. Statistical Test</h1>
 <h3 id="1-1-which-statistical-test-did-you-use-to-analyze-the-nyc-subway-data-did-you-use-a-one-tail-or-a-two-tail-p-value-what-is-the-null-hypothesis-what-is-your-p-critical-value-">1.1 Which statistical test did you use to analyze the NYC subway data? Did you use a one-tail or a two-tail P value? What is the null hypothesis? What is your p-critical value?</h3>
-<p>I used a Mann-Whitney U-test to analyze the subway/weather data. I did a two tailed test with an alpha of .05. I&#39;m not sure how to calculate a p-critical value for a U distribution, but I used the p-value to test my hypothesis.   </p>
+<p>I used a Mann-Whitney U-test to analyze the subway/weather data.<br>This test tries to determine whether one distribution is more likely to generate a higher value than another. This is perfect for our question: Do more people ride the NYC subway when it is raining or when it is not raining?<br>Our null hypothesis is that the probability that a random hourly entry record drawn from our non-rainy days has a 50/50 chance of being greater than a random hourly entry record from our rainy days. In formal language, this is expressed as:<br><strong>H<sub>0</sub>: P(x &gt; y) = 0.5</strong><br><strong>H<sub>A</sub>: P(x &gt; y) &ne; 0.5</strong><br>Where <em>H<sub>0</sub></em> is the null hypothesis, <em>H<sub>A</sub></em> is the alternative hypothesis, <em>x</em> is a random hourly entry from our non-rainy days, and <em>y</em> is a random
+hourly entry from our rainy days.<br>The p-critical value is 0.05.</p>
 <h3 id="1-2-why-is-this-statistical-test-applicable-to-the-dataset-in-particular-consider-the-assumptions-that-the-test-is-making-about-the-distribution-of-ridership-in-the-two-samples-">1.2 Why is this statistical test applicable to the dataset? In particular, consider the assumptions that the test is making about the distribution of ridership in the two samples.</h3>
 <p>I would have used a Z-test for this dataset because our sample sizes were much greater than 30, that assumes the data is normally distributed.<br>After performing a Shapiro-Wilk test, I found out that this data isn&#39;t from a normal distribution, so I had to use a non-parametric test.  The Mann-Whitney test uses the same assumption that we have a large sample (greater than 20), but it assumes nothing about the distribution the sample comes from.  </p>
 <h3 id="1-3-what-results-did-you-get-from-this-statistical-test-these-should-include-the-following-numerical-values-p-values-as-well-as-the-means-for-each-of-the-two-samples-under-test-">1.3 What results did you get from this statistical test? These should include the following numerical values: p-values, as well as the means for each of the two samples under test.</h3>
-<p>average entries with rain: 1105.4463767458733<br>average entries without rain: 1090.278780151855<br>U: 1924409167.0<br>p-value: 0.024999912793489721  </p>
+<p>average entries with rain: 1105.4463767458733<br>average entries without rain: 1090.278780151855<br>U: 1924409167.0<br>p-value: 0.04999982558697944  </p>
 <h3 id="1-4-what-is-the-significance-and-interpretation-of-these-results-">1.4 What is the significance and interpretation of these results?</h3>
-<p>These results show that it is very likely (95%) that the differences in means aren&#39;t just by chance.  The average ridership on rainy days in actually higher.</p>
+<p>These results show that it is very unlikely (~5%) that the differences in means are just by chance.  The average ridership on rainy days is actually higher.</p>
 <h1 id="section-2-linear-regression">Section 2. Linear Regression</h1>
 <h3 id="2-1-what-approach-did-you-use-to-compute-the-coefficients-theta-and-produce-prediction-for-entriesn_hourly-in-your-regression-model-">2.1 What approach did you use to compute the coefficients theta and produce prediction for ENTRIESn_hourly in your regression model:</h3>
 <p>I used both OLS and gradient descent. I thought it would be nice to get familiar with both.</p>
@@ -131,16 +26,16 @@ pre > code {
 <h3 id="2-5-what-is-your-model-s-r2-coefficients-of-determination-value-">2.5 What is your model’s R2 (coefficients of determination) value?</h3>
 <p>My R2 ended up being about 0.4168.</p>
 <h3 id="2-6-what-does-this-r2-value-mean-for-the-goodness-of-fit-for-your-regression-model-do-you-think-this-linear-model-to-predict-ridership-is-appropriate-for-this-dataset-given-this-r2-value-">2.6 What does this R2 value mean for the goodness of fit for your regression model? Do you think this linear model to predict ridership is appropriate for this dataset, given this R2 value?</h3>
-<p>It&#39;s not great, I just wanted to get to above .4 for the assignment. However, I did find this information on minitab&#39;s website:</p>
+<p>This R2 shows that about 42% of the variation in hourly entries can be explained by the features we chose for our model.<br>I was disappointed in that low percentage until I ran into this information on minitab&#39;s website:</p>
 <blockquote>
 <p>In some fields, it is entirely expected that your R-squared values will be low. For example, any field that attempts to predict human behavior, such as psychology, typically has R-squared values lower than 50%. Humans are simply harder to predict than, say, physical processes.</p>
 </blockquote>
-<p>Given that information, I would say that my model is appropriate for this dataset, considering how unpredictable humans can be.</p>
+<p>Given that information, I would say that my model is appropriate for this dataset, considering how unpredictable humans can be. Even though we still have 58% of the variability unexplained, our predictions are much better than random guessing and can have practical applications in capacity planning.</p>
 <h1 id="section-3-visualization">Section 3. Visualization</h1>
 <h3 id="3-1-one-visualization-should-contain-two-histograms-one-of-entriesn_hourly-for-rainy-days-and-one-of-entriesn_hourly-for-non-rainy-days-">3.1 One visualization should contain two histograms: one of  ENTRIESn_hourly for rainy days and one of ENTRIESn_hourly for non-rainy days.</h3>
-<p><img src="histograms.png" alt="histograms"><br>Blue is non-rain and green is rain</p>
+<p><img src="histograms.png" alt="histograms"><br>This chart compares the distributions of the non-rainy and rainy days. There were fewer rainy days but the spread looks very similar in both. I cut off entries that were greater than 10,000 because they all had virtually one and it&#39;s much clearer in this narrow view.</p>
 <h3 id="3-2-one-visualization-can-be-more-freeform-">3.2 One visualization can be more freeform.</h3>
-<p><img src="day_week.png" alt="day_week"></p>
+<p><img src="per_day.png" alt="per_day"><br>It is very apparent by this chart that the days with the lowest ridership were Saturday and Sunday. There is quite a difference between Sunday and Tuesday, so the day of the week could help predict ridership.</p>
 <h1 id="section-4-conclusion">Section 4. Conclusion</h1>
 <p>Please address the following questions in detail. Your answers should be 1-2 paragraphs long.  </p>
 <h3 id="4-1-from-your-analysis-and-interpretation-of-the-data-do-more-people-ride-the-nyc-subway-when-it-is-raining-or-when-it-is-not-raining-">4.1 From your analysis and interpretation of the data, do more people ride the NYC subway when it is raining or when it is not raining?</h3>
@@ -158,4 +53,6 @@ suggest that the wind speed and temperature were just as big of a part of the mo
 <p>One of the biggest shortcomings with the linear regression is that I don&#39;t know for sure if I reached a global optimum. Using gradient descent, I was able to get a quicker answer for more parameters. Looking back, choosing a limited set of parameters
 and using an ordinary least squares approach would have given me a better model.<br>The Mann-Whitney U-test is a robust test that does very well with data that isn&#39;t normally-distributed. After some research, I couldn&#39;t find any real shortcomings of the test overall. However, the fact that I just picked
 .05 as the alpha for my test can come under some scrutiny. More practice and familiarity in the area would help me decide if that was a good
-significance value or not.</p>
+significance value or not.<br>Our dataset has very accurate measurements. Weather stations are good at reporting rainfall and turnstiles are good at counting people. The two problems I have with this dataset have to do with time.
+We are only given a month of data, which makes our model fairly weak. There are other rainy months in the year, and the weather can probably predict rider behavior in winter months as well.
+It would also be nice to see multiple years, to tell how much ridership is increasing over time. This data is about to turn 5 years old in a couple months, so our model could wear out over time.</p>
